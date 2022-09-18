@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomeScreen from "./screens/Homescreen";
+import ProductScreen from "./screens/Productscreen";
+import CartScreen from "./screens/Cartscreen";
+import Navbar from "./components/Navbar";
+import Backdrop from "./components/Backdrop";
+import Sidedrawer from "./components/Sidedrawer";
 function App() {
+  const [sidetoggle, setSidetoggle] = useState(false);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Navbar click={() => setSidetoggle(true)} />
+      <Backdrop show={sidetoggle} click={() => setSidetoggle(false)} />
+      <Sidedrawer show={sidetoggle} click={() => setSidetoggle(false)} />
+      <main>
+        <Routes>
+          <Route path="/" element={<HomeScreen />} />
+          <Route path="/product/:id" element={<ProductScreen />} />
+          <Route path="/cart" element={<CartScreen />} />
+        </Routes>
+      </main>
+    </BrowserRouter>
   );
 }
 
